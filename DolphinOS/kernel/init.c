@@ -1,5 +1,5 @@
 /*(C) 2018 Future-Technology
- *design by Olaf 2018/6
+ *design by Olaf 
  *this is the entry of DolphinOS
  */
 
@@ -14,6 +14,7 @@
 #include "pic.h"
 #include "io_ASM.h"
 #include "handler_ASM.h"
+#include "timer.h"
 
 int Kernel_Init(){
 	init_display_info();
@@ -28,11 +29,9 @@ int Kernel_Init(){
 	init_memory();
 	init_idt();
 	init_pic();
-	io_out8_ASM(PIC0_IMR, 0xfd);
+	init_timer();
+	//io_out8_ASM(PIC0_IMR, 0xfd);
 	io_sti();
 	
-	
-//	io_out8_ASM(PIC1_IMR, 0xef);
-	//_asm_inthandler21_keyboard();
 	while(1){}
 }

@@ -1,6 +1,8 @@
 global _asm_inthandler21_keyboard
+global _asm_inthandler20_timer
 
 extern inthandler21_keyboard
+extern inthandler20_timer
 
 INT_M_CTL EQU 0X20
 EOI EQU 0X20
@@ -23,3 +25,20 @@ _asm_inthandler21_keyboard:	; IRQ 1		keyboard
 	POP		ES
 	IRETD					
 	
+_asm_inthandler20_timer:
+	push es
+	push ds
+	pushad
+	mov eax,esp
+	push eax
+	mov ax,ss
+	mov ds,ax
+	mov es,ax
+	call inthandler20_timer
+	pop eax
+	popad
+	pop ds
+	pop es
+	iretd
+
+

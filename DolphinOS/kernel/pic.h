@@ -12,4 +12,4 @@
 #define PIC1_ICW4		0x00a1
 
 void init_pic();
-void inthandler21_keyboard(int32_t *esp);
+

@@ -10,7 +10,10 @@ void init_idt(){
 	}
 	load_idtr(IDT_LIMIT, IDT_ADDR);
 	//set_idt_gatedesc(idt + 0x21, (int)&_asm_inthandler21_keyboard, 2 * 8, AR_INTGATE32);
-	set_idt_gatedesc(idt + 0x21, (int)&_asm_inthandler21_keyboard, 0x08, 0x8e,0);
+	set_idt_gatedesc(idt + 0x21, (int)&_asm_inthandler21_keyboard, 0x08, AR_INTGATE32,0);
+	
+	set_idt_gatedesc(idt + 0x20, (int)&_asm_inthandler20_timer, 0x08, AR_INTGATE32,0);
+	
 }
 
 /*

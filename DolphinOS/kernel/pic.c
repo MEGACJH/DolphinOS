@@ -19,21 +19,8 @@ void init_pic(){
 	io_out8_ASM(PIC1_ICW3, 2     ); /* PIC1, IRQ2 connect */
 	io_out8_ASM(PIC1_ICW4, 0x01  ); /* A model, interupt complete model */
 
-	io_out8_ASM(PIC0_IMR,  0xfb  ); /* 0xfb = 11111011. Prohibition of all of PIC's interupt except PIC1*/
+	io_out8_ASM(PIC0_IMR,  0xfc  ); /* 0xfc = 11111100. Prohibition of all of PIC's interupt except PIC1*/
 	io_out8_ASM(PIC1_IMR,  0xff  ); /* 0xff = 11111111. Prohibition of all of slave PIC's interupt */
 	
 }
 
-/*It is very difficult to find this mistake, because the textbook is aslo worry!!!!
- *At the beginning, my os can only accept the interupt once!!!
- *First, I suspicious of the IDT, but the IDT is work. because the os can accept the interupt once.
- *And then, I study the 8259A, but I found it is not 8259A problem. Even you have inform the pic that the interupt has been finished.
- *Finally, I was surprised to find that the Intel 8042. you need read the data from the Intel 8042! beacuse if you haven't read the data, the 8042 still think the interupt hasn't be completed.
- *It cost me about three weeks to solve the problem. OMG!!!
- */
-void inthandler21_keyboard(int32_t *esp)
-{
-	printk("  INT21 (IRQ-1)  ");
-	io_out8_ASM(PIC0_OCW2,0x61);
-	io_in8_ASM(0x60); //It is very important sentence in the function, if you haven't read the data, the 8042 still think the interupt hasn't be completed.
-}
