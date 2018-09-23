@@ -28,11 +28,11 @@ int Kernel_Init(){
 	init_memory();
 	init_idt();
 	init_pic();
+	io_out8_ASM(PIC0_IMR, 0xfd);
 	io_sti();
 	
-	io_out8_ASM(PIC0_IMR, 0xf9);
+	
 //	io_out8_ASM(PIC1_IMR, 0xef);
-	_asm_inthandler21_keyboard();
-	while(1){
-	}
+	//_asm_inthandler21_keyboard();
+	while(1){}
 }
